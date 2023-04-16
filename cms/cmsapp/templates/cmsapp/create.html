@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    #cke_id_body{
+        width:100% !important;
+
+    }
+    #container{
+        width:50%;
+        box-shadow:0 3px 8px 0 rgba(0,0,0,0.2);
+        height:auto;
+        padding: 30px 20px 20px 20px;
+        border-radius: 30px;
+        margin-bottom: 20px;
+
+    }
+      #container h3{text-align:center;}
+</style>
+
+<div class="container" id = "container">
+    <h3><strong>Create An Article</strong></h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        {{form.media}}
+        <input type="submit" class="btn btn-primary" value="Create">
+
+    </form>
+</div>
+
+<!--</form>-->
+
+<script>
+    let inputfields = document.getElementsByTagName('input')
+    let bodyfield = document.getElementById('id_body')
+    let selectfield = document.getElementById('id_category')
+    for(let i=0; i<inputfields.length; i++){
+        inputfields[i].classList.add('form-control')
+
+    }
+    bodyfield.classList.add('form-control')
+    selectfield.classList.add('form-select')
+</script>
+{% endblock %}

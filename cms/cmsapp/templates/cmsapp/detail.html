@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+ <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">{{post.title}}</h1>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">Posted on January 1, 2022 by Start Bootstrap</div>
+                            <!-- Post categories-->
+                            <a href="{% url 'profile' post.writer.profile_id %}" style="text-decoration:none">
+                             <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                    <div class="d-flex align-items-end justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img class="rounded-circle me-3" src="{{post.writer.picture.url}}" alt="image" style="width:20%; height=20%;">
+                                            <div class="small">
+                                                <div class="fw-bold">{{post.writer.name}}</div>
+                                                <div class="text-muted">{{post.created}} &middot; </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                             </div>
+                            </a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{post.category}}</a>
+<!--                            <a href="{% url 'update' post.slug %}"><button class="btn btn-primary">Update</button></a>-->
+<!--                            <a href="{% url 'delete' post.slug %}"><button class="btn btn-danger">Delete</button></a>-->
+                        </header>
+                        <!-- Preview image figure-->
+                        <figure class="mb-4"><img class="img-fluid rounded" src="{{post.image.url}}" alt="..." /></figure>
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p class="fs-5 mb-4">{{post.body|safe}}</p>
+
+                        </section>
+
+                    </article>
+                    <!-- Comments section-->
+                    <section class="mb-5">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <!-- Comment form-->
+                                <form class="mb-4" method="POST">
+<!--                                    <textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>-->
+
+                                    {% csrf_token %}
+                                    {{ form }}
+                                    <br>
+                                    <input type="submit" value="Comment" class="btn btn-primary">
+                                </form>
+                                <!-- Comment with nested comments-->
+                                {%  for comment in comments %}
+                                <div class="d-flex mb-4">
+                                    <!-- Parent comment-->
+
+                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="ms-3">
+
+                                        <div class="fw-bold">{{ comment.commenter }}</div>
+                                        {{ comment.body }}
+                                    </div>
+                                    </div>
+
+                                      {% endfor %}
+                            </div>
+                        </diV>
+                    </section>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+
+
+                    <div class="card border-dark text-dark  mb-3" style="max-width: 23rem;">
+                     <div class="card-header"><h2>Recent Post</h2></div>
+                     {% for post in posts %}
+                      <div class="card-body text-dark bg-light">
+                         <h5 class="card-title">{{post.title}}</h5>
+                         <p class="card-text">{{post.body|truncatechars:100|safe}}</p>
+                          <a class="text-decoration-none" href="{% url 'detail' post.slug %}">
+                              <button class="btn btn-primary">Read</button></a>
+                      </div>
+                        <br>
+                      {% endfor %}
+                    </div>
+                    <br>
+
+
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
