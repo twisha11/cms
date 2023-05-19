@@ -11,6 +11,10 @@ step 2:
 ```
 workon venv
 ```
+or 
+```
+venv\Scripts\activate
+```
 step 3:
 ```
 pip install django
